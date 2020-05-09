@@ -1,20 +1,23 @@
-import React from 'react';
-import { Text, Button, View } from 'react-native';
-import { NavigationStackProp } from 'react-navigation-stack';
+import React, { useContext } from 'react';
+import { Text, Button } from 'react-native';
+import { NavigationEvents } from "react-navigation";
 
-type Props = {
-  navigation: NavigationStackProp;
-};
+import { Context as AuthContext } from '../context/AuthContext';
+import AuthForm from '../components/AuthForm';
 
-const Signup = ({ navigation }: Props) => {
+const Signup = ({ navigation }) => {
+  const { state, signup, clearError } = useContext(AuthContext);
+
   return (
-    <View>
+    <>
+      <NavigationEvents onWillFocus={clearError} />
       <Text style={{ fontSize: 50 }}>Signup</Text>
+      <AuthForm text="Sign Up" onSubmit={signup} error={state.error} />
       <Button
         title="Go to Sign In"
         onPress={() => navigation.navigate('Signin')}
       />
-    </View>
+    </>
   );
 };
 
