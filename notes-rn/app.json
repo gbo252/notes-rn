@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "cocktails",
-    "slug": "cocktails",
+    "name": "notes-rn",
+    "slug": "notes-rn",
     "platforms": [
       "ios",
       "android",
