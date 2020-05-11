@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { Text, Button } from 'react-native';
+import { ScrollView } from 'react-native';
+import { Button } from 'react-native-elements';
 import { NavigationEvents } from 'react-navigation';
 
 import { Context as AuthContext } from '../context/AuthContext';
@@ -9,16 +10,24 @@ const Signin = ({ navigation }) => {
   const { state, signin, clearError } = useContext(AuthContext);
 
   return (
-    <>
+    <ScrollView>
       <NavigationEvents onWillFocus={clearError} />
-      <Text style={{ fontSize: 50 }}>Signin</Text>
       <AuthForm text="Sign In" onSubmit={signin} error={state.error} />
       <Button
-        title="Go to Sign Up"
+        title="If you haven't already registered, click here to Sign Up!"
         onPress={() => navigation.navigate('Signup')}
+        type="clear"
+        containerStyle={{ margin: 15 }}
+        titleStyle={{ fontSize: 16 }}
       />
-    </>
+    </ScrollView>
   );
+};
+
+Signin.navigationOptions = {
+  title: 'Sign In',
+  headerLeft: () => null,
+  headerTitleStyle: { fontFamily: 'ComicNeueBold' },
 };
 
 export default Signin;

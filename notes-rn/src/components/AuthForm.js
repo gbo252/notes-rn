@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, Button, Text } from 'react-native';
+import { View } from 'react-native';
+import { Input, Button, Avatar, Text, Divider } from 'react-native-elements';
 import { NavigationEvents } from 'react-navigation';
 
 const AuthForm = ({ text, onSubmit, error }) => {
@@ -7,52 +8,80 @@ const AuthForm = ({ text, onSubmit, error }) => {
   const [password, setPassword] = useState('');
 
   return (
-    <>
+    <View style={{ marginHorizontal: 15 }}>
       <NavigationEvents
         onWillFocus={() => {
           setEmail('');
           setPassword('');
         }}
       />
-      <TextInput
+      <View style={{ position: 'relative', alignSelf: 'center' }}>
+        <Text
+          h3
+          style={{
+            alignSelf: 'center',
+            marginVertical: 40,
+            color: 'rgb(30, 30, 30)',
+          }}
+        >
+          NOTES
+        </Text>
+        <Avatar
+          size={50}
+          source={require('../../assets/logo.png')}
+          containerStyle={{
+            alignSelf: 'center',
+            position: 'absolute',
+            left: -70,
+            top: 27,
+          }}
+          placeholderStyle={{ backgroundColor: 'transparent' }}
+        />
+      </View>
+      <Input
         value={email}
+        label="Email Address"
         onChangeText={setEmail}
-        style={styles.input}
-        placeholder="email"
+        placeholder="Email"
+        leftIcon={{ type: 'font-awesome', name: 'envelope', color: 'gray' }}
+        leftIconContainerStyle={{ marginRight: 5 }}
+        containerStyle={{ marginBottom: 5 }}
         autoCapitalize="none"
         autoCorrect={false}
         clearButtonMode="while-editing"
         keyboardType="email-address"
         textContentType="emailAddress"
       />
-      <TextInput
+      <Input
         value={password}
+        label="Password"
         onChangeText={setPassword}
-        style={styles.input}
-        placeholder="password"
+        placeholder="Password"
+        leftIcon={{ type: 'font-awesome', name: 'key', color: 'gray' }}
+        leftIconContainerStyle={{ marginRight: 5 }}
         autoCapitalize="none"
         autoCorrect={false}
         secureTextEntry={true}
         autoCompleteType="off"
         clearButtonMode="while-editing"
         textContentType="none"
+        errorMessage={error}
+        errorStyle={{ marginTop: 5 }}
       />
-      <Button title={text} onPress={() => onSubmit({ email, password })} />
-      {error ? (
-        <Text style={{ color: 'red', marginLeft: 10 }}>{error}</Text>
-      ) : null}
-    </>
+      <Button
+        title={text}
+        containerStyle={{ marginTop: 20, alignSelf: 'center' }}
+        buttonStyle={{
+          backgroundColor: '#b56d34',
+          borderColor: 'transparent',
+          paddingHorizontal: 20,
+        }}
+        type="solid"
+        onPress={() => onSubmit({ email, password })}
+      />
+      <Divider style={{ marginTop: 30 }} />
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    fontSize: 25,
-    margin: 10,
-    padding: 5,
-    borderWidth: 1,
-    borderColor: '#000',
-  },
-});
 
 export default AuthForm;

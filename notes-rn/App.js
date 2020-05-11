@@ -2,7 +2,9 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { ThemeProvider } from 'react-native-elements';
 
+import theme from './src/theme';
 import Auth from './src/screens/Auth';
 import Signup from './src/screens/Signup';
 import Signin from './src/screens/Signin';
@@ -30,7 +32,9 @@ const navigator = createSwitchNavigator({
 const App = createAppContainer(navigator);
 
 export default () => (
-  <AuthProvider>
-    <App ref={setNavigator} />
-  </AuthProvider>
+  <ThemeProvider theme={theme}>
+    <AuthProvider>
+      <App ref={setNavigator} />
+    </AuthProvider>
+  </ThemeProvider>
 );
