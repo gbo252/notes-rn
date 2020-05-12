@@ -5,7 +5,7 @@ import { useHeaderHeight } from 'react-navigation-stack';
 
 import useNoteScroll from '../hooks/useNoteScroll';
 
-const NoteInput = ({ onEndEditing, defaultValue }) => {
+const NoteInput = ({ onEndEditing, defaultValue, autoFocus = false }) => {
   const { editable, onScroll, onFocus, onBlur } = useNoteScroll();
 
   return (
@@ -25,6 +25,7 @@ const NoteInput = ({ onEndEditing, defaultValue }) => {
         }}
         inputStyle={{ paddingBottom: 20, paddingTop: 10 }}
         inputContainerStyle={{ borderBottomWidth: 0 }}
+        autoFocus={autoFocus}
         onEndEditing={onEndEditing}
         onScroll={onScroll}
         onFocus={onFocus}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { ThemeProvider } from 'react-native-elements';
@@ -9,7 +10,7 @@ import Signup from './src/screens/Signup';
 import Signin from './src/screens/Signin';
 import Notes from './src/screens/Notes';
 import Note from './src/screens/Note';
-import NewNote from './src/screens/NewNote'
+import NewNote from './src/screens/NewNote';
 import Account from './src/screens/Account';
 
 import { Provider as AuthProvider } from './src/context/AuthContext';
@@ -40,6 +41,7 @@ export default () => (
   <ThemeProvider theme={theme}>
     <AuthProvider>
       <NotesProvider>
+        <StatusBar barStyle="dark-content" />
         <App ref={setNavigator} />
       </NotesProvider>
     </AuthProvider>

@@ -12,7 +12,9 @@ const NewNote = () => {
     }
   };
 
-  return <NoteInput onEndEditing={onEndEditing} defaultValue="" />;
+  return (
+    <NoteInput onEndEditing={onEndEditing} autoFocus={true} defaultValue="" />
+  );
 };
 
 NewNote.navigationOptions = {

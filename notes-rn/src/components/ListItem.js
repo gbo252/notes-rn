@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { View } from 'react-native';
+import React, { useContext, useRef } from 'react';
+import { View, Alert } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { ListItem as NoteItem, Icon } from 'react-native-elements';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -8,6 +8,7 @@ import { Context as NotesContext } from '../context/NotesContext';
 
 const ListItem = ({ item, navigation }) => {
   const { deleteNote } = useContext(NotesContext);
+  const swipeRef = useRef(null);
 
   const LeftAction = () => (
     <View
@@ -45,15 +46,34 @@ const ListItem = ({ item, navigation }) => {
     </View>
   );
 
+  const deleteAlert = () =>
+    Alert.alert(
+      'Delete note?',
+      'Press OK to confirm deletion',
+      [
+        { text: 'Cancel', onPress: swipeRef.current.close, style: 'cancel' },
+        {
+          text: 'OK',
+          onPress: () => deleteNote(item._id),
+          style: 'destructive',
+        },
+      ],
+      { cancelable: false }
+    );
+
   return (
     <Swipeable
       renderLeftActions={LeftAction}
       renderRightActions={RightAction}
-      // onSwipeableLeftOpen={fetchNotes}
-      onSwipeableRightOpen={() => deleteNote(item._id)}
+      onSwipeableLeftOpen={() => {
+        navigation.navigate('Note', { id: item._id });
+        swipeRef.current.close();
+      }}
+      onSwipeableRightOpen={deleteAlert}
       friction={2}
       leftThreshold={100}
       rightThreshold={150}
+      ref={swipeRef}
     >
       <NoteItem
         title={item.content.split(/\n/)[0]}
