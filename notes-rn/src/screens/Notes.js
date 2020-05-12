@@ -43,7 +43,7 @@ Notes.navigationOptions = ({ navigation }) => {
         iconStyle={{ color: 'gray' }}
         containerStyle={{ marginRight: 15 }}
         size={28}
-        onPress={() => navigation.navigate('')}
+        onPress={() => navigation.navigate('NewNote')}
       />
     ),
   };

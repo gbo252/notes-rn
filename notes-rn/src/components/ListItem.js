@@ -56,11 +56,9 @@ const ListItem = ({ item, navigation }) => {
       rightThreshold={150}
     >
       <NoteItem
-        title={item.title}
+        title={item.content.split(/\n/)[0]}
         subtitle={new Date(item.dateUpdated).toLocaleString()}
-        onPress={() =>
-          navigation.navigate('Note', { title: item.title, id: item._id })
-        }
+        onPress={() => navigation.navigate('Note', { id: item._id })}
         containerStyle={{ backgroundColor: '#FFFFE5' }}
         bottomDivider
         chevron

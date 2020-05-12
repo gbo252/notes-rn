@@ -9,6 +9,7 @@ import Signup from './src/screens/Signup';
 import Signin from './src/screens/Signin';
 import Notes from './src/screens/Notes';
 import Note from './src/screens/Note';
+import NewNote from './src/screens/NewNote'
 import Account from './src/screens/Account';
 
 import { Provider as AuthProvider } from './src/context/AuthContext';
@@ -23,6 +24,7 @@ const authStack = createStackNavigator({
 const mainApp = createStackNavigator({
   Notes,
   Note,
+  NewNote,
   Account,
 });
 

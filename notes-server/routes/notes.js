@@ -20,17 +20,16 @@ router.get('/notes', async (req, res) => {
 });
 
 router.post('/notes', async (req, res) => {
-  const { title, content } = req.body;
+  const { content } = req.body;
 
-  if (!title || !content) {
+  if (!content) {
     return res
       .status(422)
-      .send({ error: 'Please provide both title and content' });
+      .send({ error: 'Please provide content' });
   }
 
   try {
     const newNote = await Note.create({
-      title,
       content,
       dateUpdated: Date.now(),
       _userId: req.user._id,

@@ -9,6 +9,8 @@ const notesReducer = (state, { type, payload }) => {
   switch (type) {
     case 'fetch_notes':
       return { notes: payload.sort(sortByDate) };
+    case 'new_note':
+      return { notes: [payload, ...state.notes] };
     case 'edit_note':
       return {
         notes: state.notes
@@ -40,8 +42,16 @@ const fetchNotes = (dispatch) => async () => {
   }
 };
 
+const newNote = (dispatch) => async (content) => {
+  try {
+    const response = await notesApi.post('/notes', { content });
+    dispatch({ type: 'new_note', payload: response.data });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const editNote = (dispatch) => async (_id, content) => {
-  // const title = content.split(/\n/)[0];
   try {
     await notesApi.put('/notes', { _id, content });
     dispatch({ type: 'edit_note', payload: { _id, content } });
@@ -61,6 +71,6 @@ const deleteNote = (dispatch) => async (_id) => {
 
 export const { Context, Provider } = createDataContext(
   notesReducer,
-  { fetchNotes, editNote, deleteNote },
+  { fetchNotes, editNote, deleteNote, newNote },
   { notes: [] }
 );
