@@ -12,7 +12,12 @@ const Signin = ({ navigation }) => {
   return (
     <ScrollView>
       <NavigationEvents onWillFocus={clearError} />
-      <AuthForm text="Sign In" onSubmit={signin} error={state.error} />
+      <AuthForm
+        text="Sign In"
+        onSubmit={signin}
+        error={state.error}
+        loading={state.loading}
+      />
       <Button
         title="If you haven't already registered, click here to Sign Up!"
         onPress={() => navigation.navigate('Signup')}

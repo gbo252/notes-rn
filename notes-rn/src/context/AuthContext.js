@@ -7,19 +7,22 @@ import { navigate } from '../navigationRef';
 const authReducer = (state, { type, payload }) => {
   switch (type) {
     case 'sign_in':
-      return { token: payload, error: '' };
+      return { token: payload, loading: false, error: '' };
     case 'sign_out':
-      return { token: null, error: '' };
+      return { token: null, loading: false, error: '' };
+    case 'set_loading_true':
+      return { ...state, loading: true };
     case 'add_error':
-      return { ...state, error: payload };
+      return { ...state, error: payload, loading: false };
     case 'clear_error':
-      return { ...state, error: '' };
+      return { ...state, error: '', loading: false };
     default:
       return state;
   }
 };
 
 const signup = (dispatch) => async ({ email, password }) => {
+  dispatch({ type: 'set_loading_true' });
   try {
     const response = await notesApi.post('/signup', { email, password });
     await AsyncStorage.setItem('@notes/token', response.data.token);
@@ -34,6 +37,7 @@ const signup = (dispatch) => async ({ email, password }) => {
 };
 
 const signin = (dispatch) => async ({ email, password }) => {
+  dispatch({ type: 'set_loading_true' });
   try {
     const response = await notesApi.post('/signin', { email, password });
     await AsyncStorage.setItem('@notes/token', response.data.token);
@@ -58,6 +62,7 @@ const tryLocalSignin = (dispatch) => async () => {
 };
 
 const signout = (dispatch) => async () => {
+  dispatch({ type: 'set_loading_true' });
   await AsyncStorage.removeItem('@notes/token');
   dispatch({ type: 'sign_out' });
   navigate('Signin');
@@ -70,5 +75,5 @@ const clearError = (dispatch) => () => {
 export const { Context, Provider } = createDataContext(
   authReducer,
   { signup, signin, signout, tryLocalSignin, clearError },
-  { token: null, error: '' }
+  { token: null, loading: false, error: '' }
 );

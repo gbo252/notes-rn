@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Input, Button, Avatar, Text, Divider } from 'react-native-elements';
 import { NavigationEvents } from 'react-navigation';
 
-const AuthForm = ({ text, onSubmit, error }) => {
+const AuthForm = ({ text, onSubmit, loading, error }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -78,6 +78,7 @@ const AuthForm = ({ text, onSubmit, error }) => {
         }}
         type="solid"
         onPress={() => onSubmit({ email, password })}
+        loading={loading}
       />
       <Divider style={{ marginTop: 30 }} />
     </View>

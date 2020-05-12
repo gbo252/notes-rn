@@ -32,11 +32,34 @@ router.post('/notes', async (req, res) => {
     const newNote = await Note.create({
       title,
       content,
+      dateUpdated: Date.now(),
       _userId: req.user._id,
     });
 
     res.send(newNote);
   } catch (error) {
+    res.status(422).send({ error });
+  }
+});
+
+router.put('/notes', async (req, res) => {
+  const { _id, content } = req.body;
+
+  try {
+    await Note.findOneAndUpdate({ _id }, { content, dateUpdated: Date.now() });
+    res.sendStatus(201);
+  } catch (err) {
+    res.status(422).send({ error });
+  }
+});
+
+router.delete('/notes', async (req, res) => {
+  const { _id } = req.body;
+
+  try {
+    await Note.deleteOne({ _id });
+    res.sendStatus(204);
+  } catch (err) {
     res.status(422).send({ error });
   }
 });

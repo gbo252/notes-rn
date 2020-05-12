@@ -3,7 +3,7 @@ export default {
     style: { fontFamily: 'ComicNeue' },
   },
   Button: {
-    titleStyle: { fontFamily: 'ComicNeue', fontWeight: '300' },
+    titleStyle: { fontFamily: 'ComicNeue' },
   },
   Input: {
     inputStyle: { fontFamily: 'ComicNeue' },

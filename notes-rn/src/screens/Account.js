@@ -14,4 +14,8 @@ const Account = () => {
   );
 };
 
+Account.navigationOptions = {
+  headerTitleStyle: { fontFamily: 'ComicNeueBold' },
+};
+
 export default Account;
