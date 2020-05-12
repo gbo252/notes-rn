@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { ListItem as NoteItem, Text, Icon } from 'react-native-elements';
+import { ListItem as NoteItem, Icon } from 'react-native-elements';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 import { Context as NotesContext } from '../context/NotesContext';

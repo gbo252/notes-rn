@@ -1,10 +1,29 @@
 import createDataContext from './createDataContext';
 import notesApi from '../api/notes';
 
+const sortByDate = (a, b) => {
+  return a.dateUpdated < b.dateUpdated;
+};
+
 const notesReducer = (state, { type, payload }) => {
   switch (type) {
     case 'fetch_notes':
-      return { notes: payload.sort((a, b) => a.dateUpdated < b.dateUpdated) };
+      return { notes: payload.sort(sortByDate) };
+    case 'edit_note':
+      return {
+        notes: state.notes
+          .map((note) => {
+            if (note._id === payload._id) {
+              return {
+                ...note,
+                content: payload.content,
+                dateUpdated: new Date(Date.now()).toISOString(),
+              };
+            }
+            return note;
+          })
+          .sort(sortByDate),
+      };
     case 'delete_note':
       return { notes: state.notes.filter((note) => note._id !== payload) };
     default:
@@ -21,9 +40,11 @@ const fetchNotes = (dispatch) => async () => {
   }
 };
 
-const editNote = (_dispatch) => async (_id, content) => {
+const editNote = (dispatch) => async (_id, content) => {
+  // const title = content.split(/\n/)[0];
   try {
     await notesApi.put('/notes', { _id, content });
+    dispatch({ type: 'edit_note', payload: { _id, content } });
   } catch (err) {
     console.log(err);
   }

@@ -1,28 +1,48 @@
-import React, { useState, useContext } from 'react';
-import { ScrollView } from 'react-native';
+import React, { useContext, useRef } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
 import { Input } from 'react-native-elements';
+import { useHeaderHeight } from 'react-navigation-stack';
 
 import { Context as NotesContext } from '../context/NotesContext';
+import useNoteScroll from '../hooks/useNoteScroll';
 
 const Note = ({ navigation }) => {
   const { state, editNote } = useContext(NotesContext);
   const id = navigation.getParam('id');
   const note = state.notes.find((note) => note._id === id);
+  const { editable, onScroll, onFocus, onBlur } = useNoteScroll();
+  const initialContent = useRef(note.content);
+
+  const onEndEditing = (e) => {
+    if (e.nativeEvent.text !== initialContent.current) {
+      editNote(note._id, e.nativeEvent.text);
+    }
+  };
 
   return (
-    <ScrollView
+    <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: '#FFFFE5' }}
-      // keyboardDismissMode="on-drag"
+      behavior="padding"
+      keyboardVerticalOffset={useHeaderHeight() + 15}
+      enabled
     >
       <Input
         defaultValue={note.content}
-        multiline={true}
+        multiline
         textAlignVertical="top"
-        style={{ fontSize: 20, margin: 10 }}
+        style={{
+          fontSize: 20,
+          paddingHorizontal: 10,
+        }}
+        inputStyle={{ paddingBottom: 20, paddingTop: 10 }}
         inputContainerStyle={{ borderBottomWidth: 0 }}
-        onEndEditing={(e) => editNote(note._id, e.nativeEvent.text)}
+        onEndEditing={onEndEditing}
+        onScroll={onScroll}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        editable={editable}
       />
-    </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

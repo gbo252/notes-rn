@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { FlatList } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { NavigationEvents } from 'react-navigation';
 
 import { Context as NotesContext } from '../context/NotesContext';
 import ListItem from '../components/ListItem';
@@ -9,9 +8,12 @@ import ListItem from '../components/ListItem';
 const Notes = () => {
   const { state, fetchNotes } = useContext(NotesContext);
 
+  useEffect(() => {
+    fetchNotes();
+  }, []);
+
   return (
     <>
-      <NavigationEvents onDidFocus={fetchNotes} />
       <FlatList
         data={state.notes}
         keyExtractor={(item) => item._id}
