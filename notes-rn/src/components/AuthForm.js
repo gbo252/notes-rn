@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Input, Button, Avatar, Text, Divider } from 'react-native-elements';
+import { Input, Button, Divider } from 'react-native-elements';
 import { NavigationEvents } from 'react-navigation';
+
+import LogoHeader from './LogoHeader';
 
 const AuthForm = ({ text, onSubmit, loading, error }) => {
   const [email, setEmail] = useState('');
@@ -15,29 +17,7 @@ const AuthForm = ({ text, onSubmit, loading, error }) => {
           setPassword('');
         }}
       />
-      <View style={{ position: 'relative', alignSelf: 'center' }}>
-        <Text
-          h3
-          style={{
-            alignSelf: 'center',
-            marginVertical: 40,
-            color: 'rgb(30, 30, 30)',
-          }}
-        >
-          NOTES
-        </Text>
-        <Avatar
-          size={50}
-          source={require('../../assets/logo.png')}
-          containerStyle={{
-            alignSelf: 'center',
-            position: 'absolute',
-            left: -70,
-            top: 27,
-          }}
-          placeholderStyle={{ backgroundColor: 'transparent' }}
-        />
-      </View>
+      <LogoHeader />
       <Input
         value={email}
         label="Email Address"
